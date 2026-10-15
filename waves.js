@@ -2,10 +2,10 @@ const r = require("raylib");
 
 function setup() {
     r.SetTraceLogLevel(r.LOG_NONE);
-    const windowWidth = 500;
-    const windowHeight = 500;
+    const windowWidth = 600;
+    const windowHeight = 400;
     const world = {
-        startX: 10,
+        startX: 50,
         startY: 200,
         radius: 5,
     };
@@ -19,11 +19,9 @@ function calculateY(i, startY) {
 }
 
 function drawSinWave(startX, startY) {
-    for (let x = startX; x <= startY; x++) {
-        // for (j = 100; j <= 360; j++) {
-        let y = calculateY(x, startY);
+    for (let x = startX; x <= r.GetScreenWidth(); x++) {
+        const y = Math.sin((x * Math.PI) / 180) * 100 + startY;
         r.DrawCircle(x, y, 2, r.BLUE);
-        // console.log(x, y);
     }
 }
 
@@ -34,9 +32,11 @@ function draw(world) {
 
     r.EndDrawing();
 }
+
 function loop(world) {
+    // no update!
+    // draw(world);
     while (!r.WindowShouldClose()) {
-        // no update!
         draw(world);
     }
 }
