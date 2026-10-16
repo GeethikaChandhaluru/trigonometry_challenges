@@ -7,34 +7,22 @@ function setup() {
     const world = {
         x: 50,
         y: 200,
-        radius: 3,
+        radius: 2,
     };
     r.InitWindow(windowWidth, windowHeight, "Waves");
     r.SetTargetFPS(60);
     return world;
 }
 
-function calculateSinY(angle, y) {
-    return y - Math.sin((angle * Math.PI) / 180) * 50;
+function calculateY(angle, y, ratio) {
+    return y - ratio((angle * Math.PI) / 180) * 100;
 }
 
-function calculateCosY(angle, y) {
-    return y - Math.cos((angle * Math.PI) / 180) * 50;
-}
-
-function drawSinWave(world) {
+function drawWave(world, ratio, color) {
     const { x, y, radius } = world;
 
     for (let angle = 0; angle <= r.GetScreenWidth(); angle++) {
-        r.DrawCircle(angle + x, calculateSinY(angle, y), radius, r.RED);
-    }
-}
-
-function drawCosWave(world) {
-    const { x, y, radius } = world;
-
-    for (let angle = 0; angle <= r.GetScreenWidth(); angle++) {
-        r.DrawCircle(angle + x, calculateCosY(angle, y), radius, r.ORANGE);
+        r.DrawCircle(angle + x, calculateY(angle, y, ratio), radius, color);
     }
 }
 
@@ -50,8 +38,8 @@ function draw(world) {
 
     r.DrawText(`RED : SinWave   ORANGE : CosWave`, 100, 10, 15, r.WHITE);
 
-    drawSinWave(world);
-    drawCosWave(world);
+    drawWave(world, Math.sin, r.RED);
+    drawWave(world, Math.cos, r.ORANGE);
 
     r.EndDrawing();
 }
